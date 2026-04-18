@@ -105,13 +105,6 @@ sources:
     max_items: 15
     tags: [official, standards, news]
 
-  - name: NSA Post-Quantum Cybersecurity Resources
-    type: webpage
-    url: https://www.nsa.gov/Cybersecurity/Post-Quantum-Cybersecurity-Resources/
-    include_patterns: ["quantum", "cnsa", "faq", "policy", "post-quantum"]
-    max_items: 10
-    tags: [official, policy, migration]
-
   - name: CISA PQC Resources
     type: webpage
     url: https://www.cisa.gov/resources-tools/resources/product-categories-technologies-use-post-quantum-cryptography-standards
@@ -146,6 +139,11 @@ sources:
     include_patterns: ["liboqs", "pqc", "post-quantum", "mlkem", "ml-dsa"]
     max_items: 10
     tags: [ecosystem, implementation, open-source]
+
+  - name: NIST CSRC News RSS
+    type: rss
+    url: https://csrc.nist.gov/feeds/all
+    tags: [official, standards, nist]
 
   - name: arXiv Cryptography PQC
     type: rss
