@@ -1,0 +1,108 @@
+name: Daily PQC Watch
+
+on:
+  schedule:
+    # 08h00 heure de Paris (UTC+1 hiver / UTC+2 été) → 07h00 UTC
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    inputs:
+      sector:
+        description: 'Optional sector filter: banque, santé, industrie, cloud'
+        required: false
+        type: string
+
+env:
+  PYTHONUNBUFFERED: '1'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-pqc-watch
+  cancel-in-progress: false
+
+jobs:
+  collect-and-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Resolve optional sector
+        run: |
+          echo "SECTOR=${{ github.event.inputs.sector }}" >> $GITHUB_ENV
+
+      - name: Run collection
+        shell: bash
+        run: |
+          if [ -n "$SECTOR" ]; then
+            veille-pqc run --sector "$SECTOR"
+          else
+            veille-pqc run
+          fi
+
+      - name: Build Pages bundle
+        shell: bash
+        run: |
+          if [ -n "$SECTOR" ]; then
+            veille-pqc publish-bundle --bundle-dir dist_bundle --sector "$SECTOR"
+          else
+            veille-pqc publish-bundle --bundle-dir dist_bundle
+          fi
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: veille-pqc-${{ github.run_number }}
+          path: |
+            reports/
+            data/
+            dist_bundle/
+          retention-days: 14
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist_bundle
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Send email summary
+        if: ${{ secrets.VEILLE_SMTP_HOST != '' && secrets.VEILLE_SMTP_USER != '' && secrets.VEILLE_SMTP_PASSWORD != '' && secrets.VEILLE_SMTP_FROM != '' && secrets.VEILLE_MAIL_TO != '' }}
+        env:
+          VEILLE_SMTP_HOST: ${{ secrets.VEILLE_SMTP_HOST }}
+          VEILLE_SMTP_PORT: ${{ secrets.VEILLE_SMTP_PORT }}
+          VEILLE_SMTP_USER: ${{ secrets.VEILLE_SMTP_USER }}
+          VEILLE_SMTP_PASSWORD: ${{ secrets.VEILLE_SMTP_PASSWORD }}
+          VEILLE_SMTP_FROM: ${{ secrets.VEILLE_SMTP_FROM }}
+          VEILLE_SMTP_STARTTLS: ${{ secrets.VEILLE_SMTP_STARTTLS }}
+          VEILLE_MAIL_TO: ${{ secrets.VEILLE_MAIL_TO }}
+        shell: bash
+        run: |
+          export VEILLE_SMTP_PORT="${VEILLE_SMTP_PORT:-587}"
+          export VEILLE_SMTP_STARTTLS="${VEILLE_SMTP_STARTTLS:-true}"
+          if [ -n "$SECTOR" ]; then
+            veille-pqc send-mail --to "$VEILLE_MAIL_TO" --sector "$SECTOR"
+          else
+            veille-pqc send-mail --to "$VEILLE_MAIL_TO"
+          fi

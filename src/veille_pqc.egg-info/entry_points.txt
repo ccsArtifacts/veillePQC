@@ -1,0 +1,2 @@
+[console_scripts]
+veille-pqc = veille_pqc.main:app

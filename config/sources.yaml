@@ -1,0 +1,163 @@
+keywords:
+  high_priority:
+    - post-quantum
+    - post quantum
+    - pqc
+    - quantum-safe
+    - quantum safe
+    - crypto-agility
+    - crypto agility
+    - migration to pqc
+    - pq migration
+    - hybrid key exchange
+    - ml-kem
+    - ml-dsa
+    - slh-dsa
+    - fn-dsa
+    - cnsa 2.0
+    - harvest now decrypt later
+    - hndl
+  medium_priority:
+    - x25519mlkem768
+    - x-wing
+    - frodokem
+    - hqc
+    - ikev2
+    - tls 1.3
+    - ssh
+    - pki
+    - certificate
+    - firmware signing
+    - cryptographic inventory
+    - cbom
+    - key management
+categories:
+  standards:
+    - standard
+    - draft
+    - fips
+    - sp 800
+    - rfc
+    - ietf
+    - nist
+    - etsi
+  migration:
+    - migration
+    - transition
+    - inventory
+    - procurement
+    - roadmap
+    - crypto-agility
+    - crypto agility
+    - discovery
+  implementation:
+    - implementation
+    - library
+    - liboqs
+    - oqs
+    - release
+    - benchmark
+    - integration
+    - openssl
+  research:
+    - arxiv
+    - paper
+    - preprint
+    - proof
+    - security analysis
+    - cryptanalysis
+sectors:
+  banque:
+    - payment
+    - bank
+    - banking
+    - iso 20022
+    - sepa
+    - pki
+    - hsm
+    - swift
+  santé:
+    - health
+    - healthcare
+    - hospital
+    - medical
+    - hds
+    - ehr
+  industrie:
+    - industrial
+    - manufacturing
+    - ics
+    - scada
+    - ot
+    - firmware
+  cloud:
+    - cloud
+    - saas
+    - kubernetes
+    - tls
+    - vpn
+    - ssh
+sources:
+  - name: NIST PQC Project News
+    type: webpage
+    url: https://csrc.nist.gov/Projects/post-quantum-cryptography/news
+    include_patterns: ["pqc", "news", "standard", "draft"]
+    max_items: 15
+    tags: [official, standards, news]
+
+  - name: NSA Post-Quantum Cybersecurity Resources
+    type: webpage
+    url: https://www.nsa.gov/Cybersecurity/Post-Quantum-Cybersecurity-Resources/
+    include_patterns: ["quantum", "cnsa", "faq", "policy", "post-quantum"]
+    max_items: 10
+    tags: [official, policy, migration]
+
+  - name: CISA PQC Resources
+    type: webpage
+    url: https://www.cisa.gov/resources-tools/resources/product-categories-technologies-use-post-quantum-cryptography-standards
+    include_patterns: ["post-quantum", "cryptography", "product", "technology"]
+    max_items: 10
+    tags: [official, inventory, procurement]
+
+  - name: ENISA Cryptography
+    type: webpage
+    url: https://www.enisa.europa.eu/topics/digital-identity-and-data-protection/cryptography
+    include_patterns: ["post-quantum", "cryptography", "study", "integration"]
+    max_items: 12
+    tags: [official, eu, guidance]
+
+  - name: ETSI Quantum Safe
+    type: webpage
+    url: https://www.etsi.org/technologies/quantum-safe-cryptography
+    include_patterns: ["quantum", "safe", "cryptography", "migration", "hybrid"]
+    max_items: 12
+    tags: [official, standards, eu]
+
+  - name: IETF Datatracker PQC
+    type: webpage
+    url: https://datatracker.ietf.org/doc/search/?name=&activedrafts=on&rfcs=on&sort=&stream=all&wg=&area=&author=&keyword=post-quantum
+    include_patterns: ["draft", "rfc", "post-quantum", "mlkem", "hybrid"]
+    max_items: 20
+    tags: [official, protocols, ietf]
+
+  - name: PQCA Blog
+    type: webpage
+    url: https://pqca.org/blog/
+    include_patterns: ["liboqs", "pqc", "post-quantum", "mlkem", "ml-dsa"]
+    max_items: 10
+    tags: [ecosystem, implementation, open-source]
+
+  - name: arXiv Cryptography PQC
+    type: rss
+    url: https://rss.arxiv.org/rss/cs.CR
+    tags: [research, papers]
+
+  - name: GitHub Releases liboqs
+    type: rss
+    url: https://github.com/open-quantum-safe/liboqs/releases.atom
+    tags: [implementation, open-source, releases]
+
+  - name: GitHub Releases oqs-provider
+    type: rss
+    url: https://github.com/open-quantum-safe/oqs-provider/releases.atom
+    tags: [implementation, open-source, releases]

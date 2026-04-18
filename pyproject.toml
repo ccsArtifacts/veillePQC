@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "veille-pqc"
+version = "0.3.0"
+description = "Automated PQC monitoring with GitHub Actions, email alerts, artifacts, and static HTML reports"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "OpenAI for Abdoul Ahad FALL" }
+]
+dependencies = [
+  "httpx==0.27.2",
+  "beautifulsoup4==4.12.3",
+  "feedparser==6.0.11",
+  "pydantic==2.9.2",
+  "PyYAML==6.0.2",
+  "rapidfuzz==3.10.1",
+  "tenacity==9.0.0",
+  "typer>=0.15.4",
+  "python-dateutil==2.9.0.post0",
+  "pandas==2.2.3",
+  "streamlit==1.39.0",
+]
+
+[project.scripts]
+veille-pqc = "veille_pqc.main:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

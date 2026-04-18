@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+/data/*.db
+/reports/*
+!/reports/.gitkeep
+/site/*
+!/site/.gitkeep
+/logs/*
+!/logs/.gitkeep
+.streamlit/
