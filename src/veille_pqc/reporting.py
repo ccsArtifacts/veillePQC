@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import csv
 import html
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from veille_pqc.models import Item
@@ -10,7 +10,7 @@ from veille_pqc.scoring import classify_priority
 
 
 def sort_items(items: list[Item]) -> list[Item]:
-    return sorted(items, key=lambda x: (x.score, x.published or datetime.min), reverse=True)
+    return sorted(items, key=lambda x: (x.score, x.published or datetime.min.replace(tzinfo=timezone.utc)), reverse=True)
 
 
 def _filter_items(items: list[Item], sector: str | None = None) -> list[Item]:
