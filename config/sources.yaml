@@ -17,6 +17,9 @@ keywords:
     - cnsa 2.0
     - harvest now decrypt later
     - hndl
+    - fips 203
+    - fips 204
+    - fips 205
   medium_priority:
     - x25519mlkem768
     - x-wing
@@ -31,6 +34,9 @@ keywords:
     - cryptographic inventory
     - cbom
     - key management
+    - kyber
+    - dilithium
+    - sphincs
 categories:
   standards:
     - standard
@@ -98,64 +104,143 @@ sectors:
     - vpn
     - ssh
 sources:
-  - name: NIST PQC Project News
-    type: webpage
-    url: https://csrc.nist.gov/Projects/post-quantum-cryptography/news
-    include_patterns: ["pqc", "news", "standard", "draft"]
-    max_items: 15
-    tags: [official, standards, news]
-
-  - name: CISA PQC Resources
-    type: webpage
-    url: https://www.cisa.gov/resources-tools/resources/product-categories-technologies-use-post-quantum-cryptography-standards
-    include_patterns: ["post-quantum", "cryptography", "product", "technology"]
-    max_items: 10
-    tags: [official, inventory, procurement]
-
-  - name: ENISA Cryptography
-    type: webpage
-    url: https://www.enisa.europa.eu/topics/digital-identity-and-data-protection/cryptography
-    include_patterns: ["post-quantum", "cryptography", "study", "integration"]
-    max_items: 12
-    tags: [official, eu, guidance]
-
-  - name: ETSI Quantum Safe
-    type: webpage
-    url: https://www.etsi.org/technologies/quantum-safe-cryptography
-    include_patterns: ["quantum", "safe", "cryptography", "migration", "hybrid"]
-    max_items: 12
-    tags: [official, standards, eu]
-
-  - name: IETF Datatracker PQC
-    type: webpage
-    url: https://datatracker.ietf.org/doc/search/?name=&activedrafts=on&rfcs=on&sort=&stream=all&wg=&area=&author=&keyword=post-quantum
-    include_patterns: ["draft", "rfc", "post-quantum", "mlkem", "hybrid"]
-    max_items: 20
-    tags: [official, protocols, ietf]
-
-  - name: PQCA Blog
-    type: webpage
-    url: https://pqca.org/blog/
-    include_patterns: ["liboqs", "pqc", "post-quantum", "mlkem", "ml-dsa"]
-    max_items: 10
-    tags: [ecosystem, implementation, open-source]
-
-  - name: NIST CSRC News RSS
+  # ── Sources officielles RSS ──────────────────────────────────────────
+  - name: NIST CSRC News
     type: rss
     url: https://csrc.nist.gov/feeds/all
+    max_items: 30
     tags: [official, standards, nist]
 
-  - name: arXiv Cryptography PQC
+  - name: IETF Datatracker – nouvelles RFCs
+    type: rss
+    url: https://www.rfc-editor.org/rss/rfc-index.rss
+    max_items: 30
+    tags: [official, protocols, ietf]
+
+  - name: ENISA Publications
+    type: rss
+    url: https://www.enisa.europa.eu/publications/publications.rss
+    max_items: 20
+    tags: [official, eu, guidance]
+
+  # ── Industrie & cloud ────────────────────────────────────────────────
+  - name: Cloudflare Blog
+    type: rss
+    url: https://blog.cloudflare.com/rss/
+    max_items: 30
+    tags: [industry, cloud, tls]
+
+  - name: Google Security Blog
+    type: rss
+    url: https://security.googleblog.com/feeds/posts/default
+    max_items: 30
+    tags: [industry, cloud, implementation]
+
+  - name: AWS Security Blog
+    type: rss
+    url: https://aws.amazon.com/blogs/security/feed/
+    max_items: 30
+    tags: [industry, cloud, implementation]
+
+  - name: Microsoft Security Blog
+    type: rss
+    url: https://www.microsoft.com/en-us/security/blog/feed/
+    max_items: 30
+    tags: [industry, cloud, implementation]
+
+  - name: IBM Security Intelligence
+    type: rss
+    url: https://securityintelligence.com/feed/
+    max_items: 20
+    tags: [industry, research]
+
+  # ── Recherche ────────────────────────────────────────────────────────
+  - name: arXiv Cryptography
     type: rss
     url: https://rss.arxiv.org/rss/cs.CR
+    max_items: 40
     tags: [research, papers]
 
+  - name: IACR ePrint (cryptographie)
+    type: rss
+    url: https://eprint.iacr.org/rss/rss.xml
+    max_items: 40
+    tags: [research, papers, iacr]
+
+  # ── Open-source & implémentations ───────────────────────────────────
   - name: GitHub Releases liboqs
     type: rss
     url: https://github.com/open-quantum-safe/liboqs/releases.atom
+    max_items: 20
     tags: [implementation, open-source, releases]
 
   - name: GitHub Releases oqs-provider
     type: rss
     url: https://github.com/open-quantum-safe/oqs-provider/releases.atom
+    max_items: 20
     tags: [implementation, open-source, releases]
+
+  - name: GitHub Releases oqs-demos
+    type: rss
+    url: https://github.com/open-quantum-safe/oqs-demos/releases.atom
+    max_items: 10
+    tags: [implementation, open-source, releases]
+
+  - name: GitHub Releases pqclean
+    type: rss
+    url: https://github.com/PQClean/PQClean/releases.atom
+    max_items: 10
+    tags: [implementation, open-source, releases]
+
+  - name: GitHub Releases Bouncy Castle
+    type: rss
+    url: https://github.com/bcgit/bc-java/releases.atom
+    max_items: 10
+    tags: [implementation, open-source, releases]
+
+  # ── Médias spécialisés sécurité ──────────────────────────────────────
+  - name: The Register – Security
+    type: rss
+    url: https://www.theregister.com/security/headlines.atom
+    max_items: 30
+    tags: [media, news]
+
+  - name: Ars Technica – Security
+    type: rss
+    url: https://feeds.arstechnica.com/arstechnica/security
+    max_items: 30
+    tags: [media, news]
+
+  - name: Schneier on Security
+    type: rss
+    url: https://www.schneier.com/blog/atom.xml
+    max_items: 20
+    tags: [research, expert, news]
+
+  - name: Trail of Bits Blog
+    type: rss
+    url: https://blog.trailofbits.com/feed/
+    max_items: 20
+    tags: [research, implementation]
+
+  # ── Pages web officielles (avec tolérance 403) ───────────────────────
+  - name: NIST PQC Project News
+    type: webpage
+    url: https://csrc.nist.gov/Projects/post-quantum-cryptography/news
+    include_patterns: ["pqc", "news", "standard", "draft", "fips"]
+    max_items: 20
+    tags: [official, standards, news]
+
+  - name: ETSI Quantum Safe
+    type: webpage
+    url: https://www.etsi.org/technologies/quantum-safe-cryptography
+    include_patterns: ["quantum", "safe", "cryptography", "migration", "hybrid"]
+    max_items: 15
+    tags: [official, standards, eu]
+
+  - name: PQCA Blog
+    type: webpage
+    url: https://pqca.org/blog/
+    include_patterns: ["liboqs", "pqc", "post-quantum", "mlkem", "ml-dsa"]
+    max_items: 15
+    tags: [ecosystem, implementation, open-source]
